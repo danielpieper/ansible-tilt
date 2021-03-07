@@ -30,6 +30,12 @@
       dest: '{{ tilt_download_dir.path }}/{{ tilt_archive }}'
       checksum: '{{ tilt_checksum }}'
 
+  - name: 'Ensure gnu-tar macosx package is present'
+    community.general.homebrew:
+      name: gnu-tar
+      state: present
+    when: ansible_os_family == 'Darwin'
+
   - name: 'Extract {{ tilt_download_dir.path }}/{{ tilt_archive }}'
     ansible.builtin.unarchive:
       src: '{{ tilt_download_dir.path }}/{{ tilt_archive }}'
