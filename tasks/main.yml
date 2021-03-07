@@ -1,0 +1,59 @@
+---
+- name: resolve platform specific vars
+  include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+      skip: true
+      paths:
+        - '{{ role_path }}/vars'
+
+
+- name: 'Check if {{ tilt_exe }} is installed'
+  stat:
+    path: '{{ tilt_exe }}'
+  register: tilt_installed
+
+
+- block:
+  - name: 'Create temporary download directory'
+    ansible.builtin.tempfile:
+      state: directory
+      suffix: tilt
+    register: tilt_download_dir
+
+  - name: 'Download {{ tilt_url }} to {{ tilt_download_dir.path }}/{{ tilt_archive }}'
+    get_url:
+      url: '{{ tilt_url }}'
+      dest: '{{ tilt_download_dir.path }}/{{ tilt_archive }}'
+      checksum: '{{ tilt_checksum }}'
+
+  - name: 'Extract {{ tilt_download_dir.path }}/{{ tilt_archive }}'
+    ansible.builtin.unarchive:
+      src: '{{ tilt_download_dir.path }}/{{ tilt_archive }}'
+      dest: '{{ tilt_download_dir.path }}'
+      remote_src: yes
+
+  - name: 'Ensure {{ tilt_install_dir }} exists'
+    ansible.builtin.file:
+      path: '{{ tilt_install_dir }}'
+      state: directory
+      mode: 0755
+
+  - name: 'Copy {{ tilt_download_dir.path }}/tilt to {{ tilt_exe }}'
+    ansible.builtin.copy:
+      src: '{{ tilt_download_dir.path }}/tilt'
+      dest: '{{ tilt_exe }}'
+      remote_src: yes
+      mode: 0755
+
+  when: tilt_installed.stat.exists is false
+
+
+- name: 'Link {{ tilt_link }} to {{ tilt_exe }}'
+  file:
+    src: '{{ tilt_exe }}'
+    dest: '{{ tilt_link }}'
+    state: link

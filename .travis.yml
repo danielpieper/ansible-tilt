@@ -1,0 +1,23 @@
+---
+branches: main
+
+jobs:
+  include:
+    - name: "Python 3.9 on Ubuntu 20.04"
+      os: linux
+      dist: focal
+      language: python
+      python: '3.9'
+    - name: "Python 3.9 on OSX"
+      os: osx
+      osx_image: xcode12.2
+      language: shell
+
+install:
+  - pip3 install --upgrade pip ansible
+  - ansible --version
+  - python3 --version
+  - printf '[defaults]\nroles_path=../' >ansible.cfg
+
+script:
+  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check

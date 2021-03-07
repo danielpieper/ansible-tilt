@@ -1,0 +1,7 @@
+---
+tilt_exe: '{{ tilt_install_dir }}/tilt-{{ tilt_ver }}'
+tilt_link: '{{ tilt_install_dir }}/tilt'
+tilt_platform: '{{ tilt_os }}.{{ tilt_arch }}'
+tilt_archive: 'tilt.{{ tilt_ver }}.{{ tilt_platform }}.{{ tilt_ext }}'
+tilt_url: '{{ tilt_mirror }}/v{{ tilt_ver }}/{{ tilt_archive }}'
+tilt_checksum: '{{ tilt_checksums[tilt_ver][tilt_platform] }}'
