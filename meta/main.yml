@@ -1,11 +1,9 @@
 galaxy_info:
   author: danielpieper
   description: Installs Tilt
-
+  role_name: tilt
   issue_tracker_url: https://github.com/danielpieper/ansible-tilt/issues
-
   license: MIT
-
   min_ansible_version: 2.9
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
@@ -18,12 +16,12 @@ galaxy_info:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
   platforms:
-  - name: Ubuntu
-    versions:
-    - focal
-  - name: MacOSX
-    versions:
-    - all
+    - name: Ubuntu
+      versions:
+        - focal
+    - name: MacOSX
+      versions:
+        - 10.15
 
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is a keyword that describes
