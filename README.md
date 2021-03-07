@@ -1,4 +1,6 @@
-Role Name
+[![Build Status](https://travis-ci.com/danielpieper/ansible-tilt.svg?branch=main)](https://travis-ci.com/danielpieper/ansible-tilt)
+
+Tilt
 =========
 
 This role installs [tilt](https://github.com/tilt-dev/tilt) in the users `.local/bin` directory.
@@ -6,7 +8,7 @@ This role installs [tilt](https://github.com/tilt-dev/tilt) in the users `.local
 Requirements
 ------------
 
--
+TODO
 
 Role Variables
 --------------
@@ -22,10 +24,10 @@ Example Playbook
 ----------------
 
 ```
-    - hosts: localhost
-      connection: local
-      roles:
-         - { role: danielpieper.tilt }
+- hosts: localhost
+  connection: local
+  roles:
+     - { role: danielpieper.tilt }
 ```
 
 License
