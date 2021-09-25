@@ -1,5 +1,5 @@
 ---
-tilt_ver: '0.20.8'
+tilt_ver: '0.22.10'
 tilt_mirror: 'https://github.com/tilt-dev/tilt/releases/download'
 tilt_os: 'linux'
 tilt_arch: 'x86_64'
@@ -7,6 +7,9 @@ tilt_ext: 'tar.gz'
 tilt_install_dir: '{{ ansible_env.HOME }}/.local/bin'
 
 tilt_checksums:
+  0.22.10:
+    linux.x86_64: 'sha256:4cfb673b11be7665caae8e0717f3be45fa1fe2e97ce1e704a6d294bb578e2566'
+    mac.x86_64: 'sha256:77ee4b38d7e196c06ce508482a464f360a6f6a2b47202dda25920f5cbf34a39c'
   0.20.8:
     linux.x86_64: 'sha256:1d791966fd38c8ee4b06158fb6ef9d51db0dcc0b3049269267d2cf306983ea83'
     mac.x86_64: 'sha256:955380b58befb419bb96e4dc252646c8feb7528277b78acb949dc7cec2e5ce18'
