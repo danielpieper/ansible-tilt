@@ -11,6 +11,29 @@
         - '{{ role_path }}/vars'
 
 
+- name: Wrap version fetching
+  block:
+    - name: Cardano | Get the current cardano-cli version
+      command: tilt version
+      register: tilt_version_output
+      changed_when: false   # for idempodence
+
+    - name: Set concrete binary versions' facts
+      set_fact:
+        tilt_current_version: "{{ tilt_version_output.stdout | regex_search('[0-9]+\\.[0-9]+\\.[0-9]') }}"
+  rescue:
+
+    - name: Set empty binary versions' facts
+      set_fact:
+        tilt_current_version: ""
+
+- debug:
+    var: tilt_current_version
+  changed_when: true
+
+- fail:
+    msg: fail
+
 - name: 'Check if {{ tilt_exe }} is installed'
   stat:
     path: '{{ tilt_exe }}'
