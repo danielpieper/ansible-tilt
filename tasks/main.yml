@@ -13,32 +13,19 @@
 
 - name: Wrap version fetching
   block:
-    - name: Cardano | Get the current cardano-cli version
+    - name: Get the current tilt version
       command: tilt version
       register: tilt_version_output
       changed_when: false   # for idempodence
 
-    - name: Set concrete binary versions' facts
+    - name: Set concrete binary version's fact
       set_fact:
         tilt_current_version: "{{ tilt_version_output.stdout | regex_search('[0-9]+\\.[0-9]+\\.[0-9]') }}"
   rescue:
 
-    - name: Set empty binary versions' facts
+    - name: Set empty binary version's fact
       set_fact:
         tilt_current_version: ""
-
-- debug:
-    var: tilt_current_version
-  changed_when: true
-
-- fail:
-    msg: fail
-
-- name: 'Check if {{ tilt_exe }} is installed'
-  stat:
-    path: '{{ tilt_exe }}'
-  register: tilt_installed
-
 
 - block:
   - name: 'Create temporary download directory'
@@ -78,7 +65,8 @@
       remote_src: yes
       mode: 0755
 
-  when: tilt_installed.stat.exists is false
+  when:
+    - tilt_current_version != tilt_ver
 
 
 - name: 'Link {{ tilt_link }} to {{ tilt_exe }}'
